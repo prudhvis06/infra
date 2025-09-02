@@ -1,11 +1,11 @@
 module "vpc" {
-  source     = "./vpc"
+  source     = "../vpc"
   cidr_block = var.vpc_cidr_block
   name       = var.vpc_name
 }
 
 module "sg" {
-  source                = "./sg"
+  source                = "../sg"
   name                  = var.sg_name
   description           = var.sg_description
   vpc_id                = module.vpc.vpc_id
@@ -16,14 +16,14 @@ module "sg" {
 }
 
 module "ebs" {
-  source            = "./ebs"
+  source            = "../ebs"
   availability_zone = var.availability_zone
   size              = var.volume_size
   name              = var.volume_name
 }
 
 module "ec2" {
-  source              = "./ec2"
+  source              = "../ec2"
   ami                 = var.ami
   instance_type       = var.instance_type
   subnet_id           = module.vpc.vpc_id
@@ -35,7 +35,7 @@ module "ec2" {
 }
 
 module "iam" {
-  source               = "./iam"
+  source               = "../iam"
   name                 = var.iam_role_name
   assume_role_service  = "ec2.amazonaws.com"
   policy_name          = var.iam_policy_name
@@ -44,7 +44,7 @@ module "iam" {
 }
 
 module "s3" {
-  source      = "./s3"
+  source      = "../s3"
   bucket_name = var.bucket_name
 }
 
